@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.14: http://docutils.sourceforge.net/" />
+<title>DEVOPS-1862: How to sync user accounts between LDAP -&gt; G Suite -&gt; Atlassian</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 7952 2016-07-26 18:15:59Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+.subscript {
+  vertical-align: sub;
+  font-size: smaller }
+
+.superscript {
+  vertical-align: super;
+  font-size: smaller }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, .code .error {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left, table.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right, table.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+.align-top    {
+  vertical-align: top }
+
+.align-middle {
+  vertical-align: middle }
+
+.align-bottom {
+  vertical-align: bottom }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+pre.code .ln { color: grey; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="devops-1862-how-to-sync-user-accounts-between-ldap-g-suite-atlassian">
+<h1 class="title">DEVOPS-1862: How to sync user accounts between LDAP -&gt; G Suite -&gt; Atlassian</h1>
+
+<div class="section" id="background">
+<h1>Background</h1>
+<p>User accounts manual maintenance starts to be complicated when amount of
+users grows. They also need to have access to multiple services and it is easy
+to forget who needs what permissions. Human factor also leads to data
+inconsistency between services.</p>
+</div>
+<div class="section" id="motivation">
+<h1>Motivation</h1>
+<p>The aim of this document is to describe all the researches and tests that have
+been done to achieve automatic account creation between services. We want to
+decrease amount of maintenance and increase consistency.</p>
+</div>
+<div class="section" id="description">
+<h1>Description</h1>
+<p>LDAP is the source of truth. Human (non-service) account created in LDAP should
+be automatically created in G Suite (if needed) and Atlassian (if needed). For
+example new developer should have access to gmail, confluence, jira and
+bitbucket. However, office user need access just to gmail.</p>
+<p>Image below shows basic idea of the solution</p>
+<object data="svg/basic.svg" type="image/svg+xml">
+svg/basic.svg</object>
+</div>
+<div class="section" id="available-solutions">
+<h1>Available solutions</h1>
+<p>There are different solutions to sync LDAP with G Suite and with Atlassian. One
+thing that we can't achieve is to sync LDAP to Atlassian directly. Atlassian
+cloud doesn't support LDAP integration (Atlassian server does).</p>
+<p>The integration concept (with things that we can't achieve) looks like this</p>
+<object data="svg/details.svg" type="image/svg+xml">
+svg/details.svg</object>
+<p>Available ways of integration are described below.</p>
+<div class="section" id="ldap-g-suite">
+<h2>LDAP -&gt; G Suite</h2>
+<p>LDAP state can be synchronised to G Suite using Google Cloud Directory Sync. It
+can sync users and groups (creating mailing groups of LDAP groups). It is
+already implemented and can be executed with Jenkins job
+<a class="reference external" href="https://jenkins.aws.cmcrc.com/job/sync_ldap_to_g_suite">https://jenkins.aws.cmcrc.com/job/sync_ldap_to_g_suite</a> (it is currently
+configured to syncs only users, not groups).</p>
+<p>Groups can be useful during G Suite -&gt; Atlassian sync (described in section
+&quot;Solution proposal&quot;).</p>
+</div>
+<div class="section" id="g-suite-atlassian">
+<h2>G Suite -&gt; Atlassian</h2>
+<p>Atlassian has it's own independent account system called Atlassian Id. User need
+to have Atlassian Id account to log in to any other Atlassian service.</p>
+<p>There are two ways of providing access to Atlassian cloud to G Suite users: SSO
+and G Suite sync. Both of them has their pros and cons so they will be described
+more detailed below.</p>
+<div class="section" id="single-sign-on-sso">
+<h3>Single Sign On (SSO)</h3>
+<p>SSO is an identity solution that provides access to Atlassian cloud to users
+from chosen domain. It means that they can log in to Atlassian cloud with Google
+credentials (G Suite is identity provider). However, we still need to
+create/modify/delete Jira/Confluence/Bitbucket accounts manually and provide
+access to resources. We can provide access to Atlassian cloud to all G Suite
+users or to chosen organizations (kind of custom groups). Drawback of
+providing SSO access to some users is: other users from this domain will have no
+access to Atlassian cloud at all.</p>
+<p>How SSO works</p>
+<object data="svg/how_it_works_sso.svg" type="image/svg+xml">
+svg/how_it_works_sso.svg</object>
+</div>
+<div class="section" id="g-suite-sync">
+<h3>G Suite sync</h3>
+<p>This sync allows us to automatically create/modify/remove users' accounts.
+Atlassian sync accounts every 4 hours and reflects changes in Atlassian ID</p>
+<object data="svg/group_sync.svg" type="image/svg+xml">
+svg/group_sync.svg</object>
+</div>
+<div class="section" id="sso-and-g-suite-sync-comparison">
+<h3>SSO and G Suite sync comparison</h3>
+<p>The table below comparing most interested functionality of both services.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="87%" />
+<col width="4%" />
+<col width="9%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Functionality</th>
+<th class="head">SSO</th>
+<th class="head">G Suite</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>User management within G Suite</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr><td>User can change username/email/password in Atlassian</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+<tr><td>Automatic Atlassian account creation/modification/deletion</td>
+<td>✗</td>
+<td>✓</td>
+</tr>
+<tr><td>User can log in with Google credentials</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr><td>Additional cost of service</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr><td>Give access to Atlassian ID for chosen users</td>
+<td>✓*</td>
+<td>✓</td>
+</tr>
+<tr><td>Grant permissions to Jira/Confluence/Bitbucket automatically</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+* users with no access to log in to Atlassian with SSO will have no access to
+Atlassian cloud at all</blockquote>
+</div>
+</div>
+<div class="section" id="solution-proposal">
+<h2>Solution proposal</h2>
+<p>We can create LDAP group with users that need access to Atlassian resources.
+This group will be synced to G Suite as mailing group. With G Suite Atlassian
+integration we can sync this mailing group. User accounts will be automatically
+created/removed/modified every 4 hours reflecting changes on G Suite.</p>
+</div>
+</div>
+</div>
+</body>
+</html>
