@@ -1,0 +1,10 @@
+div {
+    height:         400px;
+    width:          800px;
+    margin-top:     -200px;
+    margin-left:    -400px;
+    position:       fixed;
+    top:            50%;
+    left:           50%;
+    text-align: center;
+}
