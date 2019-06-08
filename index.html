@@ -47,8 +47,20 @@
   <script src="https://code.highcharts.com/maps/highmaps.js"></script>
   <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
   <script src="https://code.highcharts.com/mapdata/custom/world-palestine-highres.js"></script>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div id="text">
+    <h1>
+      Wycieczki duże i duże
+    </h1>
+    <p>
+      Poniższa mapa prezentuje kraje, które odwiedziłem oraz obserwacje jakie
+      zapadły mi w pamięć podczas ich zwiedzania. Klikając na podświetlony kraj
+      możesz dać się ponieść fantazji czytelniczej.
+    </p>
+  </div>
   <div id="container" style="width:100%; height:100vh;"></div>
   <script>
   // Prepare demo data
@@ -85,7 +97,7 @@
     },
 
     subtitle: {
-        text: 'Kliknij na kraj spośród dostępnych by dowiedzieć się więcej'
+        text: 'Kliknij na kraj spośród dostępnych'
     },
 
     mapNavigation: {
