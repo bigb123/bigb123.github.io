@@ -1,7 +1,6 @@
 #container {
     height: 500px;
     min-width: 310px;
-    /* max-width: 1000px; */
     margin: 0 auto;
 }
 .loading {
@@ -10,7 +9,7 @@
     color: gray;
 }
 
-#text {
+.text {
   font-family: 'Open Sans', sans-serif;
   height:         200px;
   width:          800px;
@@ -19,7 +18,7 @@
   /* position:       fixed; */
 }
 
-#text h1 {
+.text h1 {
   text-align: center;
 }
 /* div {

@@ -1,57 +1,24 @@
-<!-- <html lang="en">
-<head>
-  <meta charset="utf-8">
-
-  <title>Landing page</title>
-  <meta name="description" content="Landing page">
-  <meta name="author" content="Peterro">
-  <link rel="stylesheet" href="css/styles.css?v=1.0">
-</head>
-<body>
-
-    <div>
-        <h1>Look at me! I just got a new firmware!</h1>
-        <h2>And I can display some stuff here</h2>
-        <h3>I'm connected to guest wifi network</h3>
-    </div>
-
-</body>
-</html> -->
-
-<!-- <!DOCTYPE html>
-<html>
-<head>
-  <title>Trip map</title>
-  <link rel="stylesheet" href="https://cdn.rawgit.com/bjornd/jvectormap/master/jquery-jvectormap.css" type="text/css" media="screen"/>
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://cdn.rawgit.com/bjornd/jvectormap/master/jquery-jvectormap.js"></script>
-  <script src="http://jvectormap.com/js/jquery-jvectormap-world-mill.js"></script>
-</head>
-<body>
-  <div id="world-map" style="width: 600px; height: 400px"></div>
-  <script>
-    $(function(){
-      $('#map').vectorMap({map: 'world_mill'});
-    });
-  </script>
-</body>
-</html> -->
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>Trip map</title>
+
+  <!-- CSS -->
   <link rel="stylesheet" href="css/styles.css?v=1.0">
+
+  <!-- CDN scripts -->
   <script src="https://code.highcharts.com/maps/highmaps.js"></script>
   <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
   <script src="https://code.highcharts.com/mapdata/custom/world-palestine-highres.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+
 </head>
 <body>
-  <div id="text">
+  <div id="top_text" class="text">
     <h1>
       Wycieczki duże i duże
     </h1>
@@ -61,71 +28,16 @@
       możesz dać się ponieść fantazji czytelniczej.
     </p>
   </div>
+
+  <!-- Map is in this div -->
   <div id="container" style="width:100%; height:100vh;"></div>
-  <script>
-  // Prepare demo data
-  // Data is joined to map using value of 'hc-key' property by default.
-  // See API docs for 'joinBy' for more info on linking data and map.
-  var data = [
-    ['au', 100],
-    ['sg', 100],
-    ['my', 100],
-    ['es', 100]
-  ];
 
-  // Create the chart
-  Highcharts.mapChart('container', {
+  <!-- Dynamic content -->
+  <div id="dynamic-content" class="text"></div>
 
-    plotOptions: {
-        series: {
-            point: {
-                events: {
-                    click: function () {
-                        location.href = 'https://en.wikipedia.org/wiki/' + this.name;
-                    }
-                }
-            }
-        }
-    },
+  <!-- This script is dependent on "container" and "dynamic-content" divs so it
+  has to be invoked after them! -->
+  <script src="js/highmaps_config.js"></script>
 
-    chart: {
-        map: 'custom/world-palestine-highres'
-    },
-
-    title: {
-        text: 'Mapa podróży'
-    },
-
-    subtitle: {
-        text: 'Kliknij na kraj spośród dostępnych'
-    },
-
-    mapNavigation: {
-        enabled: true,
-        buttonOptions: {
-            verticalAlign: 'top'
-        }
-    },
-
-    colorAxis: {
-        min: 0
-    },
-
-    series: [{
-        data: data,
-        name: '',
-        states: {
-            hover: {
-                color: '#BADA55'
-            }
-        },
-        dataLabels: {
-            enabled: false,
-            format: '{point.name}'
-        }
-    }]
-  });
-
-  </script>
 </body>
 </html>
