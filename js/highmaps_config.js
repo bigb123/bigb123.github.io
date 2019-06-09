@@ -48,7 +48,8 @@ Highcharts.mapChart('container', {
       enableMouseWheelZoom: false,
       mouseWheelSensitivity: 1.01,
       buttonOptions: {
-          verticalAlign: 'top'
+          verticalAlign: 'bottom',
+          align: 'right'
       }
   },
 
