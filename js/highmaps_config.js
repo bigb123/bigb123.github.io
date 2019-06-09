@@ -16,13 +16,15 @@ Highcharts.mapChart('container', {
           point: {
               events: {
                   click: function () {
-                      // location.href = 'https://en.wikipedia.org/wiki/' + this.name;
-                      // location.href = 'content/' + this.name + '/story.html'
+
+                      // Dynamic content load
                       $("#dynamic-content").load('content/' + this.name + '/story.html');
-                      // document.getElementById('dynamic-content').scrollIntoView();
+
+                      // Scroll down animation
                       $('html, body').animate({
                           scrollTop: $("#dynamic-content").offset().top
                       }, 1000);
+
                   }
               }
           }
@@ -43,6 +45,8 @@ Highcharts.mapChart('container', {
 
   mapNavigation: {
       enabled: true,
+      enableMouseWheelZoom: false,
+      mouseWheelSensitivity: 1.01,
       buttonOptions: {
           verticalAlign: 'top'
       }
@@ -65,9 +69,10 @@ Highcharts.mapChart('container', {
           format: '{point.name}',
           filter: {
               property: 'value',
-              operator: '>',
-              value: 50
-          }
+              operator: '>=',
+              value: 100
+          },
+          allowOverlap: true
       },
       showInLegend: false
   }]
